@@ -1,12 +1,14 @@
-﻿namespace MauiAppBrownian
+﻿using MauiAppBrownian.Brownian.ViewModels;
+
+namespace MauiAppBrownian
 {
     public partial class App : Application
     {
-        public App()
+        public App(BrownianViewModel brownianViewModel)
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new NavigationPage(new MainPage { BindingContext = brownianViewModel });
         }
     }
 }

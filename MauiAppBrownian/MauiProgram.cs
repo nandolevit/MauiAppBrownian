@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MauiAppBrownian.Brownian.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace MauiAppBrownian
 {
@@ -14,6 +15,8 @@ namespace MauiAppBrownian
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            builder.Services.AddTransient<BrownianViewModel>();
 
 #if DEBUG
     		builder.Logging.AddDebug();
