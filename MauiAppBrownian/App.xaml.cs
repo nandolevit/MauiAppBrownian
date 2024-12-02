@@ -8,7 +8,7 @@ namespace MauiAppBrownian
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainPage { BindingContext = brownianViewModel });
+            MainPage = new NavigationPage(new MainPage(brownianViewModel));
         }
     }
 }

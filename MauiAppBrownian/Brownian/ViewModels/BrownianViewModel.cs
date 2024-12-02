@@ -6,13 +6,23 @@ namespace MauiAppBrownian.Brownian.ViewModels;
 public class BrownianViewModel : BaseViewModel
 {
     public ICommand GeneateBrownianCommand { get; init; }
-    public ObservableCollection<double> PrecoObserv { get; init; }
 
     private double _precoInical;
     private double _volatilidade;
     private double _mediaRetorno;
     private int _tempo;
+    private double[] _prices;
 
+
+    public double[] Prices
+    {
+        get => _prices;
+        set
+        {
+            _prices = value;
+            OnPropertyChanged();
+        }
+    }
     public double PrecoInical
     {
         get => _precoInical;
@@ -52,16 +62,8 @@ public class BrownianViewModel : BaseViewModel
 
     public BrownianViewModel()
     {
-        PrecoObserv = new ObservableCollection<double>();
         GeneateBrownianCommand = new Command(execute: () =>
-        {
-            var result = GeneateBrownianMotion(Volatilidade, MediaRetorno, PrecoInical, Tempo);
-
-            foreach (var item in result)
-                PrecoObserv.Add(item);
-        });
-
-
+        Prices = GeneateBrownianMotion(Volatilidade, MediaRetorno, PrecoInical, Tempo));
     }
 
     private double[] GeneateBrownianMotion(double sigma, double mean, double initialPrice, int numDays)

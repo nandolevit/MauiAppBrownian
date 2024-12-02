@@ -4,20 +4,20 @@
              x:Class="MauiAppBrownian.MainPage">
     <StackLayout Padding="20">
         <Label Text="Preço Inicial" />
-        <Entry Text="{Binding InitialPrice}" Keyboard="Numeric" />
+        <Entry Text="{Binding PrecoInical}" Keyboard="Numeric" />
 
         <Label Text="Volatilidade" />
-        <Entry Text="{Binding Volatility}" Keyboard="Numeric" />
+        <Entry Text="{Binding Volatilidade}" Keyboard="Numeric" />
 
         <Label Text="Média do Retorno" />
-        <Entry Text="{Binding MeanReturn}" Keyboard="Numeric" />
+        <Entry Text="{Binding MediaRetorno}" Keyboard="Numeric" />
 
-        <Label Text="Tempo" />
-        <Entry Text="{Binding Time}" Keyboard="Numeric" />
+        <Label Text="Duração (dias)" />
+        <Entry Text="{Binding Tempo}" Keyboard="Numeric" />
 
-        <Button Text="Gerar Movimento Browniano" Command="{Binding GenerateCommand}" />
+        <Button Text="Gerar Movimento Browniano" Command="{Binding GeneateBrownianCommand}" />
 
-        <!--<skia:SKCanvasView PaintSurface="OnCanvasViewPaintSurface" HeightRequest="400" />-->
+        <GraphicsView x:Name="BrownianGraph" HeightRequest="300" />
     </StackLayout>
 
 </ContentPage>
