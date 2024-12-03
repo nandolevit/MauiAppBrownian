@@ -1,5 +1,4 @@
 ﻿using MauiAppBrownian.Brownian.ViewModels;
-using Microsoft.Maui.Controls;
 
 namespace MauiAppBrownian
 {
@@ -19,11 +18,19 @@ namespace MauiAppBrownian
 
         private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Prices")
-            {
-                BrownianGraph.Drawable = new BrownianGraphDrawable(_viewModel.Prices);
-                BrownianGraph.Invalidate();
-            }
+            if (e.PropertyName == "Prices") Execute();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            Execute();
+        }
+
+        private void Execute()
+        {
+            BrownianGraph.Drawable = new BrownianGraphDrawable(_viewModel.Prices);
+            BrownianGraph.Invalidate();
         }
     }
 }

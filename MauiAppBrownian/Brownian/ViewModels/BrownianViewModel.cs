@@ -62,8 +62,18 @@ public class BrownianViewModel : BaseViewModel
 
     public BrownianViewModel()
     {
-        GeneateBrownianCommand = new Command(execute: () =>
-        Prices = GeneateBrownianMotion(Volatilidade, MediaRetorno, PrecoInical, Tempo));
+        PrecoInical = 100;
+        Volatilidade = 20;
+        MediaRetorno = 1;
+        Tempo = 252;
+        Execute();
+
+        GeneateBrownianCommand = new Command(Execute);
+    }
+
+    private void Execute()
+    {
+        Prices = GeneateBrownianMotion(Volatilidade, MediaRetorno, PrecoInical, Tempo);
     }
 
     private double[] GeneateBrownianMotion(double sigma, double mean, double initialPrice, int numDays)

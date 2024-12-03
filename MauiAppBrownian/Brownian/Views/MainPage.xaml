@@ -1,23 +1,80 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MauiAppBrownian.MainPage">
-    <StackLayout Padding="20">
-        <Label Text="Preço Inicial" />
-        <Entry Text="{Binding PrecoInical}" Keyboard="Numeric" />
+             x:Class="MauiAppBrownian.MainPage"
+             HeightRequest="720"
+             WidthRequest="1080"
+             >
+    <ContentPage.Resources>
+        <Style TargetType="Entry">
+            <Setter Property="Background" Value="{StaticResource brancoNeveGradiente}"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="Background" Value="{StaticResource brancoNeveGradiente}"/>
+            <Setter Property="TextColor" Value="{StaticResource Primary}"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="#2B0B98"/>
+        </Style>
+    </ContentPage.Resources>
+    <Border Background="#537895">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="15"/>
+        </Border.StrokeShape>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Text="Exemplo entrevista"
+                   FontSize="25"
+                   Padding="10"
+                   TextColor="{StaticResource Gray100}"/>
+            <Grid Padding="20"
+                  Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border StrokeThickness="1" 
+            Grid.ColumnSpan="3"
+            Padding="10"
+            BackgroundColor="White">
+                    <GraphicsView x:Name="BrownianGraph" 
+          HeightRequest="600"/>
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                </Border>
 
-        <Label Text="Volatilidade" />
-        <Entry Text="{Binding Volatilidade}" Keyboard="Numeric" />
+                <StackLayout Padding="20"
+         VerticalOptions="Center"
+         Grid.Column="3"
+         Spacing="10">
+                    <Label Text="Preço Inicial" />
+                    <Entry Text="{Binding PrecoInical}" Keyboard="Numeric" />
 
-        <Label Text="Média do Retorno" />
-        <Entry Text="{Binding MediaRetorno}" Keyboard="Numeric" />
+                    <Label Text="Volatilidade média(%)" />
+                    <Entry Text="{Binding Volatilidade}" Keyboard="Numeric" />
 
-        <Label Text="Duração (dias)" />
-        <Entry Text="{Binding Tempo}" Keyboard="Numeric" />
+                    <Label Text="Retorno médio(%)" />
+                    <Entry Text="{Binding MediaRetorno}" Keyboard="Numeric" />
 
-        <Button Text="Gerar Movimento Browniano" Command="{Binding GeneateBrownianCommand}" />
+                    <Label Text="Tempo(dias)" />
+                    <Entry Text="{Binding Tempo}" Keyboard="Numeric" />
 
-        <GraphicsView x:Name="BrownianGraph" HeightRequest="300" />
-    </StackLayout>
+                    <Button Text="Gerar Simulação" 
+                Command="{Binding GeneateBrownianCommand}" />
+
+                </StackLayout>
+            </Grid>
+
+        </Grid>
+    </Border>
+    
 
 </ContentPage>
