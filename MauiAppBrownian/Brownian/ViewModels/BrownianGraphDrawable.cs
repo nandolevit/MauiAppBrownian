@@ -16,7 +16,7 @@
             canvas.FillColor = Colors.White;
             canvas.FillRectangle(dirtyRect);
 
-            canvas.StrokeColor = Colors.Blue;
+            canvas.StrokeColor = Colors.Red;
             canvas.StrokeSize = 2;
 
             float width = dirtyRect.Width / prices.Length;

@@ -1,5 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Net;
+using System.Text.RegularExpressions;
 using System.Windows.Input;
+using System.Xml.Linq;
 
 namespace MauiAppBrownian.Brownian.ViewModels;
 
@@ -7,10 +11,10 @@ public class BrownianViewModel : BaseViewModel
 {
     public ICommand GeneateBrownianCommand { get; init; }
 
-    private double _precoInical;
-    private double _volatilidade;
-    private double _mediaRetorno;
-    private int _tempo;
+    private string _precoInical;
+    private string _volatilidade;
+    private string _mediaRetorno;
+    private string _tempo;
     private double[] _prices;
 
 
@@ -23,57 +27,72 @@ public class BrownianViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
-    public double PrecoInical
+    public string PrecoInical
     {
         get => _precoInical;
         set
         {
-            _precoInical = value;
+            _precoInical = Regex.Replace(value!, @"\D+", "");
             OnPropertyChanged();
         }
     }
-    public double Volatilidade
+    public string Volatilidade
     {
         get => _volatilidade;
         set
         {
-            _volatilidade = value;
+            _volatilidade = Regex.Replace(value!, @"\D+", "");
             OnPropertyChanged();
         }
     }
-    public double MediaRetorno
+    public string MediaRetorno
     {
         get => _mediaRetorno;
         set
         {
-            _mediaRetorno = value;
+            _mediaRetorno = Regex.Replace(value!, @"\D+", "");
             OnPropertyChanged();
         }
     }
-    public int Tempo
+    public string Tempo
     {
         get => _tempo;
         set
         {
-            _tempo = value;
+            _tempo = Regex.Replace(value!, @"\D+", "");
             OnPropertyChanged();
         }
     }
 
     public BrownianViewModel()
     {
-        PrecoInical = 100;
-        Volatilidade = 20;
-        MediaRetorno = 1;
-        Tempo = 252;
+        PrecoInical = "100";
+        Volatilidade = "20";
+        MediaRetorno = "1";
+        Tempo = "252";
         Execute();
 
-        GeneateBrownianCommand = new Command(Execute);
+        GeneateBrownianCommand = new Command(execute: () => Execute(),
+        canExecute: () =>
+        {
+            var valid = !(string.IsNullOrEmpty(PrecoInical) ||
+            string.IsNullOrEmpty(Volatilidade) ||
+            string.IsNullOrEmpty(MediaRetorno) ||
+            string.IsNullOrEmpty(Tempo));
+
+            return valid;
+        });
+        this.PropertyChanged += CanRefresh!;
     }
 
     private void Execute()
     {
-        Prices = GeneateBrownianMotion(Volatilidade, MediaRetorno, PrecoInical, Tempo);
+        var sigma = Convert.ToDouble(Volatilidade);
+        var mean = Convert.ToDouble(MediaRetorno);
+        var initial = Convert.ToDouble(PrecoInical);
+        var numDays = Convert.ToInt32(Tempo);
+
+        Prices = GeneateBrownianMotion(sigma, mean, initial, numDays);
     }
 
     private double[] GeneateBrownianMotion(double sigma, double mean, double initialPrice, int numDays)
@@ -94,5 +113,9 @@ public class BrownianViewModel : BaseViewModel
         }
 
         return prices;
+    }
+    private void CanRefresh(object sender, PropertyChangedEventArgs args)
+    {
+        (GeneateBrownianCommand as Command)!.ChangeCanExecute();
     }
 }

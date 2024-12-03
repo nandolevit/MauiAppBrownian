@@ -11,8 +11,32 @@
         </Style>
         <Style TargetType="Button">
             <Setter Property="FontAttributes" Value="Bold"/>
-            <Setter Property="Background" Value="{StaticResource brancoNeveGradiente}"/>
-            <Setter Property="TextColor" Value="{StaticResource Primary}"/>
+            <Setter Property="Background" Value="{DynamicResource brancoNeveGradiente}"/>
+            <Setter Property="TextColor" Value="{DynamicResource Primary}"/>
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <Setter.Value>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal"/>
+                            <VisualState x:Name="Pressed"/>
+                            <VisualState x:Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="Background"
+                                            Value="{DynamicResource Primary}"/>
+                                    <Setter Property="TextColor"
+                                            Value="White"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger TargetType="Button" Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#CCCCCC"/>
+                    <Setter Property="TextColor" Value="Gray"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
         <Style TargetType="Label">
             <Setter Property="FontAttributes" Value="Bold"/>
@@ -56,16 +80,16 @@
          Grid.Column="3"
          Spacing="10">
                     <Label Text="Preço Inicial" />
-                    <Entry Text="{Binding PrecoInical}" Keyboard="Numeric" />
+                    <Entry Text="{Binding PrecoInical}" />
 
                     <Label Text="Volatilidade média(%)" />
-                    <Entry Text="{Binding Volatilidade}" Keyboard="Numeric" />
+                    <Entry Text="{Binding Volatilidade}" />
 
                     <Label Text="Retorno médio(%)" />
-                    <Entry Text="{Binding MediaRetorno}" Keyboard="Numeric" />
+                    <Entry Text="{Binding MediaRetorno}" />
 
                     <Label Text="Tempo(dias)" />
-                    <Entry Text="{Binding Tempo}" Keyboard="Numeric" />
+                    <Entry Text="{Binding Tempo}" />
 
                     <Button Text="Gerar Simulação" 
                 Command="{Binding GeneateBrownianCommand}" />
